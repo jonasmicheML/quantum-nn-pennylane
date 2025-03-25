@@ -4,7 +4,7 @@ import torch.nn as nn
 import QCircNet.circuits.QuantumCircuit as qc
 import QCircNet.utils as ut
 
-class QuantumClassifierMNIST(nn.Module):
+class Senokosov2024QuantumClassifierMNIST(nn.Module):
     """
     Full quantum neural network.
     """

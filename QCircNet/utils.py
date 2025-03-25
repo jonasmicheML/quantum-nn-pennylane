@@ -105,7 +105,7 @@ def load_and_prepare_data(X_path, y_path, bin_encoding=None, test_val_size=0.2, 
 
 
 
-def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, batch_size=10, lr=0.01):
+def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, batch_size=10, lr=0.01, binary=False):
     """
     Train the quantum neural network model using PyTorch.
     
@@ -125,7 +125,10 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, bat
     """
     # define optimizer and loss function
     optimizer = Adam(model.parameters(), lr=lr)
-    loss_fn = nn.BCELoss()
+    if binary:
+        loss_fn = nn.BCELoss()
+    else: 
+        loss_fn = nn.CrossEntropyLoss()
     
     # training loop
     losses = []
