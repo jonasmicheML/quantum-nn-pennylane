@@ -1,0 +1,11 @@
+,id,f1_score,precision,recall,accuracy,cross_entropy,seed,circuit,learning_rate,loss_history,avg_epoch_time_seconds,network_str,model_path,weight_path,epochs,n_qubits,features_per_qubit,scaler
+0,0,0.5714285714285714,0.4,1.0,0.4,0.7468364238739014,1,Ranga2024Circuit,0.01,"[0.6417600512504578, 0.6651016473770142, 0.6515867710113525]",1.7855556805928547,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Ranga2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/Ranga2024Circuit_expID_69_dfID_0.pth,results/weights/bin/,3,4,4,MinMaxScaler
+1,1,0.5714285714285714,0.4,1.0,0.4,0.7811704277992249,1,Ranga2024Circuit,0.001,"[0.6417600512504578, 0.6821910738945007, 0.6762317419052124]",1.6017595926920574,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Ranga2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/Ranga2024Circuit_expID_69_dfID_1.pth,results/weights/bin/,3,4,4,MinMaxScaler

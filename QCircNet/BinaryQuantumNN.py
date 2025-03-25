@@ -29,6 +29,12 @@ class BinQuantumNeuralNetwork(nn.Module):
         self.pre_processing = nn.Linear(input_size, n_qubits * features_per_qubit)
         self.post_processing = nn.Linear(1, 1)
 
+        for param in self.pre_processing.parameters():
+            param.requires_grad = False
+
+        for param in self.post_processing.parameters():
+            param.requires_grad = False
+
     def forward(self, x):
         """
         Forward pass through the entire model.
