@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "QCircNet"
+version = "0.1.0"
+description = "Quantum Neural Network implementation using PennyLane"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+dependencies = [
+    "pennylane==0.40.0",
+    "ipywidgets==8.1.5",
+    "pandas==2.2.3",
+    "numpy==1.26.4",
+    "matplotlib==3.9.2",
+    "scikit-learn==1.5.2",
+    "torch==2.2.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    # Add other development dependencies here
+]
+
+[tool.setuptools]
+packages = ["qcircnet"]  # Adjust this to your actual package structure
