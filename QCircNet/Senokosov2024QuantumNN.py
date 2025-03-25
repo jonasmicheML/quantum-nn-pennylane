@@ -25,8 +25,29 @@ class Senokosov2024QuantumClassifierMNIST(nn.Module):
         # create quantum circuit nn
         self.quantum_circuit_nn = circuit(n_qubits=n_qubits, features_per_qubit=features_per_qubit, seed=seed)
         
+        # CNN
+        # 16x28x28 conv layer
+        self.conv1 = nn.Conv2d(1, 16, kernel_size=5, padding=2, stride=1)
+        # Batch normalization layer
+        self.bn1 = nn.BatchNorm2d(16)
+        # ReLU activation function
+        self.relu = nn.ReLU()
+        # Max pooling layer
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
+        # 32x14x14 conv layer
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, padding=2, stride=1)
+        # Batch normalization layer
+        self.bn2 = nn.BatchNorm2d(32)
+        # ReLU activation function
+        # Max pooling layer
+        # flatten the output
+        self.flatten = nn.Flatten()
+        # fully connected layer with 1568 input features and 5 output features
+        self.fc = nn.Linear(1568, 5)
+
+
         # assure that the model input fits to the qubits
-        self.pre_processing = nn.Linear(input_size, n_qubits * features_per_qubit)
+        # self.pre_processing = nn.Linear(input_size, n_qubits * features_per_qubit)
         # scale the quantum output the 10 classes
         self.post_processing = nn.Linear(1, 10)
 
@@ -42,7 +63,18 @@ class Senokosov2024QuantumClassifierMNIST(nn.Module):
             torch.Tensor: Logits before applying sigmoid (debugging purposes)
         """
         # pre-processing
-        x = self.pre_processing(x)
+        # CNN
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.pool(x)
+        x = self.conv2(x)
+        x = self.bn2(x)
+        x = self.relu(x)
+        x = self.pool(x)
+        x = self.flatten(x)
+        x = self.fc(x)
+        # x = self.pre_processing(x)
         
         # quantum processing
         quantum_out = self.quantum_circuit_nn(x)
