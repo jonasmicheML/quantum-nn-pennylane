@@ -178,6 +178,8 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=16, batc
         epoch_start_time = time.time()
         # start_time = time.time()
         for batch in range(n_batches):
+            # print(model.state_dict()['quantum_circuit_nn.weights'].grad)
+            # print(model.state_dict()['quantum_circuit_nn.weights'])
             # get mini-batch
             start_idx = batch * batch_size
             end_idx = start_idx + batch_size
@@ -188,8 +190,9 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=16, batc
             loss = loss_fn(y_pred, y_batch)
             epoch_loss += loss.item()
             # backward pass and optimization
-            optimizer.zero_grad()
+            optimizer.zero_grad(set_to_none=False)
             loss.backward()
+            # print(model.state_dict()['quantum_circuit_nn.weights'].grad)
             optimizer.step()
             pbar.update(1)
         pbar.close()

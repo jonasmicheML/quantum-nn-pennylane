@@ -28,7 +28,7 @@ class QuantumCircuitNetwork(nn.Module):
         # init the quantum device
         self.device = qml.device("default.qubit", wires=n_qubits)
         # create the QNode with the circuit method 
-        self.qnode = qml.QNode(self.circuit, self.device, interface="torch")
+        self.qnode = qml.QNode(self.circuit, self.device, interface="torch", diff_method="backprop", grad_on_execution=True)
 
         # initialize trainable weights (variational parameters)
         self._init_weight_shapes()
@@ -78,7 +78,7 @@ class QuantumCircuitNetwork(nn.Module):
             base_idx = i * self.features_per_qubit
             for j in range(self.features_per_qubit):
                 index = j % num_gates
-                gates[index](inputs[base_idx + 0], wires=i)
+                gates[index](inputs[base_idx], wires=i)
 
     def _init_weight_shapes(self):
         """ Initialize the shapes of the weights for the circuit. Has to be changed if _variational_layer() is changed """
@@ -127,11 +127,12 @@ class QuantumCircuitNetwork(nn.Module):
 
         # process each sample in the batch
         for i in range(batch_size):
-            # pass through quantum circuit
-            outputs[i] = torch.tensor(
-                np.sum(self.qnode(x[i].detach().numpy(), self.weights.detach().numpy())),
-                requires_grad=True
-            )
+            # Pass through quantum circuit - directly use PyTorch tensors
+            # without detaching to maintain the computational graph
+            qnode_output = self.qnode(x[i], self.weights)
+            measurements_tensor = torch.stack([m for m in qnode_output])
+            outputs[i] = torch.sum(measurements_tensor)
+
         return outputs
     
     def draw(self, figwidth=10):

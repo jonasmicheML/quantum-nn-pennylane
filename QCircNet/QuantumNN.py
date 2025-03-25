@@ -37,7 +37,10 @@ class QuantumClassifierMNIST(nn.Module):
         for param in self.post_processing.parameters():
             param.requires_grad = False
 
-            
+        for param in self.quantum_circuit_nn.parameters():
+            param.requires_grad = True
+
+
     def forward(self, x):
         """
         Forward pass through the entire model.
