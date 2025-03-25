@@ -8,7 +8,7 @@ class BinQuantumNeuralNetwork(nn.Module):
     """
     Full quantum neural network.
     """
-    def __init__(self, input_size=16, circuit:qc.QuantumCircuitNetwork=qc.QuantumCircuitNetwork, n_qubits:int=4, features_per_qubit:int=4, seed=42):
+    def __init__(self, input_size=16, circuit:qc.QuantumCircuitNetwork=qc.QuantumCircuitNetwork, n_qubits:int=4, features_per_qubit:int=4, seed=42, hybrid=False):
         """
         Args:
             input_size (int, optional): _description_. Defaults to 16.
@@ -30,10 +30,10 @@ class BinQuantumNeuralNetwork(nn.Module):
         self.post_processing = nn.Linear(1, 1)
 
         for param in self.pre_processing.parameters():
-            param.requires_grad = False
+            param.requires_grad = hybrid
 
         for param in self.post_processing.parameters():
-            param.requires_grad = False
+            param.requires_grad = hybrid
 
     def forward(self, x):
         """

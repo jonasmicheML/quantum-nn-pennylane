@@ -1,0 +1,41 @@
+,id,f1_score,precision,recall,accuracy,cross_entropy,seed,circuit,learning_rate,loss_history,val_losses,val_f1s,avg_epoch_time_seconds,network_str,model_path,weight_path,epochs,n_qubits,features_per_qubit,scaler
+0,0,0.5714285714285714,0.4,1.0,0.4,0.7863527536392212,1,Ranga2024Circuit,0.01,"[0.6417600512504578, 0.6831576824188232]","[0.7655982971191406, 0.7637875080108643]","[0.6301369863013698, 0.6301369863013698]",0.36331355571746826,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Ranga2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Ranga2024Circuit_expID_0_dfID_0.pth,results/weights/bin/,2,4,4,MinMaxScaler
+1,1,0.5714285714285714,0.4,1.0,0.4,0.7885320782661438,1,Ranga2024Circuit,0.001,"[0.6417600512504578, 0.6842994093894958]","[0.766889750957489, 0.7667072415351868]","[0.6301369863013698, 0.6301369863013698]",0.2913334369659424,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Ranga2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Ranga2024Circuit_expID_0_dfID_1.pth,results/weights/bin/,2,4,4,MinMaxScaler
+2,2,0.5714285714285714,0.4,1.0,0.4,0.8268860578536987,1,Senokosov2024Circuit,0.01,"[0.6412790417671204, 0.6860570907592773]","[0.7864444255828857, 0.7837042212486267]","[0.6301369863013698, 0.6301369863013698]",0.3219115734100342,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Senokosov2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Senokosov2024Circuit_expID_0_dfID_2.pth,results/weights/bin/,2,4,4,MinMaxScaler
+3,3,0.5714285714285714,0.4,1.0,0.4,0.8329628109931946,1,Senokosov2024Circuit,0.001,"[0.6412790417671204, 0.6872053146362305]","[0.7889823913574219, 0.7886995077133179]","[0.6301369863013698, 0.6301369863013698]",0.3241509199142456,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Senokosov2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Senokosov2024Circuit_expID_0_dfID_3.pth,results/weights/bin/,2,4,4,MinMaxScaler
+4,4,0.5714285714285714,0.4,1.0,0.4,0.7241995334625244,1,Anusha2024Circuit,0.01,"[0.6440946459770203, 0.6469559073448181]","[0.7161602973937988, 0.7160832285881042]","[0.6301369863013698, 0.6301369863013698]",0.12634515762329102,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Anusha2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Anusha2024Circuit_expID_0_dfID_4.pth,results/weights/bin/,2,4,4,MinMaxScaler
+5,5,0.5714285714285714,0.4,1.0,0.4,0.7238404750823975,1,Anusha2024Circuit,0.001,"[0.6440946459770203, 0.6476328372955322]","[0.7162676453590393, 0.7162570357322693]","[0.6301369863013698, 0.6301369863013698]",0.10632538795471191,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Anusha2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Anusha2024Circuit_expID_0_dfID_5.pth,results/weights/bin/,2,4,4,MinMaxScaler
+6,6,0.5714285714285714,0.4,1.0,0.4,0.8417538404464722,1,DoubleEntanglementVLCircuit,0.01,"[0.6502163410186768, 0.699266791343689]","[0.7949373126029968, 0.7919802069664001]","[0.6301369863013698, 0.6301369863013698]",0.1754094362258911,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): DoubleEntanglementVLCircuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/DoubleEntanglementVLCircuit_expID_0_dfID_6.pth,results/weights/bin/,2,4,4,MinMaxScaler
+7,7,0.5714285714285714,0.4,1.0,0.4,0.8478109240531921,1,DoubleEntanglementVLCircuit,0.001,"[0.6502163410186768, 0.7004571557044983]","[0.7971509695053101, 0.7968518137931824]","[0.6301369863013698, 0.6301369863013698]",0.19193637371063232,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): DoubleEntanglementVLCircuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/DoubleEntanglementVLCircuit_expID_0_dfID_7.pth,results/weights/bin/,2,4,4,MinMaxScaler
