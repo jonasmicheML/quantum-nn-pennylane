@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import pennylane as qml
 import matplotlib.pyplot as plt
+import QCircNet.utils as ut
 
 class QuantumCircuitNetwork(nn.Module):
     """
@@ -10,7 +11,7 @@ class QuantumCircuitNetwork(nn.Module):
     This class handles the common functionality while specific circuit architectures
     can be implemented in subclasses.
     """
-    def __init__(self, n_qubits=4, features_per_qubit=4):
+    def __init__(self, n_qubits=4, features_per_qubit=4, seed=None):
         """ 
         Initialize the quantum circuit.
 
@@ -22,6 +23,7 @@ class QuantumCircuitNetwork(nn.Module):
         self.n_qubits = n_qubits
         self.features_per_qubit = features_per_qubit
         self.total_features = n_qubits * features_per_qubit
+        self.seed = seed
         
         # init the quantum device
         self.device = qml.device("default.qubit", wires=n_qubits)
@@ -36,8 +38,12 @@ class QuantumCircuitNetwork(nn.Module):
         """
         Set up the weights for the circuit.
         Default implementation has 2 layers of rotations for each qubit.
-        """        
-        # Convert to PyTorch parameters
+        """ 
+        # set seed for reproducibility
+        if self.seed:
+            ut.set_seeds(self.seed)   
+
+        # convert to PyTorch parameters
         weight_tensors = {
             name: torch.nn.Parameter(
                 torch.Tensor(np.random.uniform(-2*np.pi, 2*np.pi, shape))
@@ -45,7 +51,7 @@ class QuantumCircuitNetwork(nn.Module):
             for name, shape in self.weight_shapes.items()
         }
         
-        # Register parameters with PyTorch
+        # register parameters with PyTorch
         for name, param in weight_tensors.items():
             self.register_parameter(name, param)
 

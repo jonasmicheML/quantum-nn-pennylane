@@ -10,8 +10,23 @@ import json
 from torch.optim import Adam
 import torch.nn as nn
 import torch
+import random
+import os
 
 from tqdm import tqdm
+
+def set_seeds(seed=42):
+    """
+    Set seeds for reproducibility across all random number generators used within this framework.
+    
+    Args:
+        seed (int): Seed value to use
+    """
+    # set all necessary seeds 
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
 
 
 def load_and_prepare_data(X_path, y_path, bin_encoding=None, test_val_size=0.2, scaler=None, random_state=42, subset=None):

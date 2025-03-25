@@ -1,26 +1,10 @@
-import os
-import random
-import numpy as np
 from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
 import torch
 import torch.nn as nn
-import QuantumCircuitNetwork as qc
+import QCircNet.QuantumCircuitNetwork as qc
+import QCircNet.utils as ut
 
-def set_seeds(seed=42):
-    """
-    Set seeds for reproducibility across all random number generators used within this framework.
-    
-    Args:
-        seed (int): Seed value to use
-    """
-    # set all necessary seeds 
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-
-
-class QuantumNeuralNetwork(nn.Module):
+class BinQuantumNeuralNetwork(nn.Module):
     """
     Full quantum neural network.
     """
@@ -34,9 +18,6 @@ class QuantumNeuralNetwork(nn.Module):
             seed (int, optional): _description_. Defaults to 42.
         """
         super().__init__()
-
-        if seed:
-            set_seeds(seed)
             
         self.n_qubits = n_qubits
         self.features_per_qubit = features_per_qubit
