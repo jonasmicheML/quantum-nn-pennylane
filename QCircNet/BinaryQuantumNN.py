@@ -1,7 +1,7 @@
 from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
 import torch
 import torch.nn as nn
-import QCircNet.QuantumCircuitNetwork as qc
+import QCircNet.circuits.QuantumCircuit as qc
 import QCircNet.utils as ut
 
 class BinQuantumNeuralNetwork(nn.Module):

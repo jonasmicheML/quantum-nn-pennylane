@@ -1,4 +1,4 @@
-import QCircNet.QuantumCircuitNetwork as qcn
+import QCircNet.circuits.QuantumCircuit as qcn
 import pennylane as qml
 import numpy as np
 import inspect
