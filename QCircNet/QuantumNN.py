@@ -30,6 +30,14 @@ class QuantumClassifierMNIST(nn.Module):
         # scale the quantum output the 10 classes
         self.post_processing = nn.Linear(1, 10)
 
+        # For an existing model
+        for param in self.pre_processing.parameters():
+            param.requires_grad = False
+
+        for param in self.post_processing.parameters():
+            param.requires_grad = False
+
+            
     def forward(self, x):
         """
         Forward pass through the entire model.

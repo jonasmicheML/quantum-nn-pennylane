@@ -200,7 +200,7 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=16, batc
 
         # record weights for the epoch
         if weight_path:
-            torch.save(model.state_dict()["quantum_circuit_nn.weights"], weight_path+f"/weights_epoch_{epoch}.pt")
+            torch.save(model.state_dict()["quantum_circuit_nn.weights"], weight_path+f"_weights_epoch_{epoch}.pt")
 
 
         # record average loss
