@@ -12,6 +12,7 @@ import torch.nn as nn
 import torch
 import random
 import os
+import time 
 
 from tqdm import tqdm
 
@@ -133,7 +134,7 @@ def load_and_prepare_data(X_path, y_path, bin_encoding=None, test_val_size=0.2, 
 
 
 
-def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, batch_size=10, lr=0.01, binary=False):
+def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=16, batch_size=32, lr=0.01, binary=False, weight_path=None):
     """
     Train the quantum neural network model using PyTorch.
     
@@ -150,6 +151,7 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, bat
         losses (list): Training loss history
         val_losses (list): Validation loss history
         val_f1s (list): Validation F1 score history
+        avg_epoch_time (float): Average time per epoch
     """
     # define optimizer and loss function
     optimizer = Adam(model.parameters(), lr=lr)
@@ -165,28 +167,26 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, bat
     n_samples = X_train.shape[0]
     n_batches = n_samples // batch_size
     
+    total_epoch_time = 0
     for epoch in range(epochs):
+        epoch_loss = 0
         # shuffle training data
         indices = torch.randperm(n_samples)
         X_shuffled = X_train[indices]
         y_shuffled = y_train[indices]
-        
-        epoch_loss = 0
-        
         pbar = tqdm(total=n_batches, desc="Training progress", unit="batch")
+        epoch_start_time = time.time()
+        # start_time = time.time()
         for batch in range(n_batches):
             # get mini-batch
             start_idx = batch * batch_size
             end_idx = start_idx + batch_size
             X_batch = X_shuffled[start_idx:end_idx]
             y_batch = y_shuffled[start_idx:end_idx]
-            
             y_pred, _ = model(X_batch)
-            
             # compute loss
             loss = loss_fn(y_pred, y_batch)
             epoch_loss += loss.item()
-            
             # backward pass and optimization
             optimizer.zero_grad()
             loss.backward()
@@ -194,7 +194,16 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, bat
             pbar.update(1)
         pbar.close()
 
-        # Record average loss
+        # calc time for epoch
+        epoch_time = time.time() - epoch_start_time
+        total_epoch_time += epoch_time
+
+        # record weights for the epoch
+        if weight_path:
+            torch.save(model.state_dict()["quantum_circuit_nn.weights"], weight_path+f"/weights_epoch_{epoch}.pt")
+
+
+        # record average loss
         avg_loss = epoch_loss / n_batches
         losses.append(avg_loss)
 
@@ -205,11 +214,14 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, bat
             print(f"Epoch {epoch+1}/{epochs}, Train-Loss: {avg_loss:.4f}, Val-Loss: {loss:.4f}, Val-F1: {f1:.4f}, Val-Precision: {precision:.4f}, Val-Recall: {recall:.4f}, Val-Accuracy: {accuracy:.4f}")
         else: 
             print(f"Epoch {epoch+1}/{epochs}, Train-Loss: {avg_loss:.4f}")
+
+
+    avg_epoch_time = total_epoch_time / epochs
         
     if len(val_losses) > 0:
-        return model, losses, val_losses, val_f1s
+        return model, losses, val_losses, val_f1s, avg_epoch_time
     else:    
-        return model, losses
+        return model, losses, avg_epoch_time
     
     
 
