@@ -1,11 +1,41 @@
 ,id,f1_score,precision,recall,accuracy,cross_entropy,seed,circuit,learning_rate,loss_history,avg_epoch_time_seconds,network_str,model_path,weight_path,epochs,n_qubits,features_per_qubit,scaler
-0,0,0.5714285714285714,0.4,1.0,0.4,0.7468364238739014,1,Ranga2024Circuit,0.01,"[0.6417600512504578, 0.6651016473770142, 0.6515867710113525]",1.7855556805928547,"BinQuantumNeuralNetwork(
+0,0,0.5714285714285714,0.4,1.0,0.4,0.7848303914070129,1,Ranga2024Circuit,0.01,"[0.6417600512504578, 0.6831576824188232, 0.6781049370765686]",0.3434266249338786,"BinQuantumNeuralNetwork(
   (quantum_circuit_nn): Ranga2024Circuit()
   (pre_processing): Linear(in_features=16, out_features=16, bias=True)
   (post_processing): Linear(in_features=1, out_features=1, bias=True)
-)",results/models/Ranga2024Circuit_expID_69_dfID_0.pth,results/weights/bin/,3,4,4,MinMaxScaler
-1,1,0.5714285714285714,0.4,1.0,0.4,0.7811704277992249,1,Ranga2024Circuit,0.001,"[0.6417600512504578, 0.6821910738945007, 0.6762317419052124]",1.6017595926920574,"BinQuantumNeuralNetwork(
+)",results/models/bin/Ranga2024Circuit_expID_69_dfID_0.pth,results/weights/bin/,3,4,4,MinMaxScaler
+1,1,0.5714285714285714,0.4,1.0,0.4,0.7883719801902771,1,Ranga2024Circuit,0.001,"[0.6417600512504578, 0.6842994093894958, 0.6799095869064331]",0.3129761219024658,"BinQuantumNeuralNetwork(
   (quantum_circuit_nn): Ranga2024Circuit()
   (pre_processing): Linear(in_features=16, out_features=16, bias=True)
   (post_processing): Linear(in_features=1, out_features=1, bias=True)
-)",results/models/Ranga2024Circuit_expID_69_dfID_1.pth,results/weights/bin/,3,4,4,MinMaxScaler
+)",results/models/bin/Ranga2024Circuit_expID_69_dfID_1.pth,results/weights/bin/,3,4,4,MinMaxScaler
+2,2,0.5714285714285714,0.4,1.0,0.4,0.8233056664466858,1,Senokosov2024Circuit,0.01,"[0.6412790417671204, 0.6860570907592773, 0.6866720914840698]",0.3523526191711426,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Senokosov2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Senokosov2024Circuit_expID_69_dfID_2.pth,results/weights/bin/,3,4,4,MinMaxScaler
+3,3,0.5714285714285714,0.4,1.0,0.4,0.8325866460800171,1,Senokosov2024Circuit,0.001,"[0.6412790417671204, 0.6872053146362305, 0.6887232065200806]",0.3430031935373942,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Senokosov2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Senokosov2024Circuit_expID_69_dfID_3.pth,results/weights/bin/,3,4,4,MinMaxScaler
+4,4,0.5714285714285714,0.4,1.0,0.4,0.7243589162826538,1,Anusha2024Circuit,0.01,"[0.6440946459770203, 0.6469559073448181, 0.6704828143119812]",0.11387864748636882,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Anusha2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Anusha2024Circuit_expID_69_dfID_4.pth,results/weights/bin/,3,4,4,MinMaxScaler
+5,5,0.5714285714285714,0.4,1.0,0.4,0.7238505482673645,1,Anusha2024Circuit,0.001,"[0.6440946459770203, 0.6476328372955322, 0.6715669631958008]",0.10608998934427898,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): Anusha2024Circuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/Anusha2024Circuit_expID_69_dfID_5.pth,results/weights/bin/,3,4,4,MinMaxScaler
+6,6,0.5714285714285714,0.4,1.0,0.4,0.8376660346984863,1,DoubleEntanglementVLCircuit,0.01,"[0.6502163410186768, 0.699266791343689, 0.6948513984680176]",0.18012571334838867,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): DoubleEntanglementVLCircuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/DoubleEntanglementVLCircuit_expID_69_dfID_6.pth,results/weights/bin/,3,4,4,MinMaxScaler
+7,7,0.5714285714285714,0.4,1.0,0.4,0.8473986983299255,1,DoubleEntanglementVLCircuit,0.001,"[0.6502163410186768, 0.7004571557044983, 0.6970447301864624]",0.18996135393778482,"BinQuantumNeuralNetwork(
+  (quantum_circuit_nn): DoubleEntanglementVLCircuit()
+  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
+  (post_processing): Linear(in_features=1, out_features=1, bias=True)
+)",results/models/bin/DoubleEntanglementVLCircuit_expID_69_dfID_7.pth,results/weights/bin/,3,4,4,MinMaxScaler
