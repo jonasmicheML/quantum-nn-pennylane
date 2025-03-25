@@ -29,6 +29,34 @@ def set_seeds(seed=42):
     os.environ['PYTHONHASHSEED'] = str(seed)
 
 
+def load_MNIST_data(data_path, subset=None, seed=42):
+    X_train = np.load(data_path+"train_X.npy")
+    y_train = np.load(data_path+"train_y.npy")
+    X_test = np.load(data_path+"test_X.npy")
+    y_test = np.load(data_path+"test_y.npy")
+
+    if subset is not None:
+        X_train = X_train[:subset]
+        y_train = y_train[:subset]
+        X_test = X_test[:subset]
+        y_test = y_test[:subset]
+
+    # shuffle the data
+    set_seeds(seed)
+    idx = np.random.permutation(len(X_train))
+    X_train, y_train = X_train[idx], y_train[idx]
+
+    idx = np.random.permutation(len(X_test))
+    X_test, y_test = X_test[idx], y_test[idx]
+
+    # convert to torch tensors
+    X_train = torch.tensor(X_train, dtype=torch.float32)
+    y_train = torch.tensor(y_train, dtype=torch.float32)
+    X_test = torch.tensor(X_test, dtype=torch.float32)
+    y_test = torch.tensor(y_test, dtype=torch.float32)
+
+    return X_train, y_train, X_test, y_test
+
 def load_and_prepare_data(X_path, y_path, bin_encoding=None, test_val_size=0.2, scaler=None, random_state=42, subset=None):
     """
     Load and prepare the data for training the quantum neural network.
@@ -170,16 +198,20 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=100, bat
         avg_loss = epoch_loss / n_batches
         losses.append(avg_loss)
 
-
-        if X_val is not None and y_val is not None:                
-            bce, accuracy, precision, recall, f1 = model.evaluate(X_val, y_val)
-            val_losses.append(bce)
+        if X_val is not None and y_val is not None:   
+            loss, accuracy, precision, recall, f1 = model.evaluate(X_val, y_val)
+            val_losses.append(loss)
             val_f1s.append(f1)
-            print(f"Epoch {epoch+1}/{epochs}, Train-Loss: {avg_loss:.4f}, Val-Loss: {bce:.4f}, Val-F1: {f1:.4f}, Val-Precision: {precision:.4f}, Val-Recall: {recall:.4f}, Val-Accuracy: {accuracy:.4f}")
+            print(f"Epoch {epoch+1}/{epochs}, Train-Loss: {avg_loss:.4f}, Val-Loss: {loss:.4f}, Val-F1: {f1:.4f}, Val-Precision: {precision:.4f}, Val-Recall: {recall:.4f}, Val-Accuracy: {accuracy:.4f}")
         else: 
             print(f"Epoch {epoch+1}/{epochs}, Train-Loss: {avg_loss:.4f}")
+        
+    if len(val_losses) > 0:
+        return model, losses, val_losses, val_f1s
+    else:    
+        return model, losses
     
-    return model, losses, val_losses, val_f1s
+    
 
 
 
