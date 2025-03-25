@@ -4,7 +4,7 @@ import torch.nn as nn
 import QCircNet.circuits.QuantumCircuit as qc
 import QCircNet.utils as ut
 
-class BinQuantumNeuralNetwork(nn.Module):
+class QuantumClassifierMNIST(nn.Module):
     """
     Full quantum neural network.
     """
@@ -25,9 +25,10 @@ class BinQuantumNeuralNetwork(nn.Module):
         # create quantum circuit nn
         self.quantum_circuit_nn = circuit(n_qubits=n_qubits, features_per_qubit=features_per_qubit, seed=seed)
         
-        # preprocesing assures that the model input fits to the qubits
+        # assure that the model input fits to the qubits
         self.pre_processing = nn.Linear(input_size, n_qubits * features_per_qubit)
-        self.post_processing = nn.Linear(1, 1)
+        # scale the quantum output the 10 classes
+        self.post_processing = nn.Linear(1, 10)
 
     def forward(self, x):
         """
@@ -40,53 +41,52 @@ class BinQuantumNeuralNetwork(nn.Module):
             torch.Tensor: Predicted output values
             torch.Tensor: Logits before applying sigmoid (debugging purposes)
         """
-        # Pre-processing
+        # pre-processing
         x = self.pre_processing(x)
         
-        # Quantum processing
+        # quantum processing
         quantum_out = self.quantum_circuit_nn(x)
         
-        # Post-processing for binary classification
+        # post-processing for classification
         logits = self.post_processing(quantum_out.unsqueeze(1))
         
-        # Apply sigmoid to get probabilities between 0 and 1
-        probabilities = torch.sigmoid(logits)
+        # apply softmax for probabilites
+        probabilities = torch.softmax(logits, dim=1)
         
-        return probabilities.squeeze(), logits.squeeze()
+        return probabilities, logits
     
     def evaluate(self, X_test, y_test):
         """
         Evaluate the trained model on test data.
-        
+
         Args:
-            model (nn.Module): Trained quantum neural network model
             X_test (torch.Tensor): Test features
-            y_test (torch.Tensor): Test targets
-        
+            y_test (torch.Tensor): Test targets (batchsize, 10)
+
         Returns:
-            tuple: (bce, accuracy, precision, recall, f1) metrics
+            tuple: (cross_entropy_loss, accuracy, precision, recall, f1) metrics
         """ 
         self.eval()   
         with torch.no_grad():
             y_pred, _ = self(X_test)
             
-            bce = nn.BCELoss()(y_pred, y_test).item()
+            cross_entropy_loss = nn.CrossEntropyLoss()(y_pred, y_test_class).item()
 
-            # round predictions to get class labels
-            y_pred_class = torch.round(y_pred)
-            
+            # covert one-hot to class indices
+            y_pred_class = torch.argmax(y_pred, dim=1)
+            y_test_class = torch.argmax(y_test, dim=1)
+
             # convert tensors to numpy arrays for sklearn metrics
-            y_test_np = y_test.cpu().numpy()
-            y_pred_class_np = y_pred_class.cpu().numpy()
-            
-            # calculate classification metrics
-            accuracy = accuracy_score(y_test_np, y_pred_class_np)
-            precision = precision_score(y_test_np, y_pred_class_np, zero_division=0)
-            recall = recall_score(y_test_np, y_pred_class_np, zero_division=0)
-            f1 = f1_score(y_test_np, y_pred_class_np, zero_division=0)
+            y_test_np = y_test_class.cpu().numpy()
+            y_pred_np = y_pred_class.cpu().numpy()
 
-        # assure the model is back in training mode
+            # compute classification metrics with weighted averaging
+            accuracy = accuracy_score(y_test_np, y_pred_np)
+            precision = precision_score(y_test_np, y_pred_np, average="weighted", zero_division=0)
+            recall = recall_score(y_test_np, y_pred_np, average="weighted", zero_division=0)
+            f1 = f1_score(y_test_np, y_pred_np, average="weighted", zero_division=0)
+
+        # ensure the model is back in training mode
         self.train()
-        
-        return bce, accuracy, precision, recall, f1
-    
+
+        return cross_entropy_loss, accuracy, precision, recall, f1
