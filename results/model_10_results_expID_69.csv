@@ -1,6 +1,0 @@
-,id,f1_score,precision,recall,accuracy,cross_entropy,seed,circuit,learning_rate,loss_history,avg_epoch_time_seconds,network_str,model_path,weight_path,epochs,n_qubits,features_per_qubit
-0,0,0.0,0.0,0.0,0.0,2.2118186950683594,1,Senokosov2024Circuit,0.01,"[0.2505148748556773, 0.25051018595695496, 0.2505091230074565, 0.25053662061691284, 0.2505043347676595, 0.25052502751350403, 0.2505332330862681, 0.25053487221399945, 0.25049745043118793, 0.25050031145413715]",1.6047000169754029,"QuantumClassifierMNIST(
-  (quantum_circuit_nn): Senokosov2024Circuit()
-  (pre_processing): Linear(in_features=16, out_features=16, bias=True)
-  (post_processing): Linear(in_features=1, out_features=10, bias=True)
-)",results/models/Senokosov2024Circuit_expID_69_dfID_0.pth,results/weights/,10,4,4
