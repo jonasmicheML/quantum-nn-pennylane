@@ -253,7 +253,7 @@ def plot_training_history(df, run_id, save_path=None, figsize=(10, 5), val=False
     loss_history = save_json_load(df, run_id, "loss_history")
     if val:
         val_loss_history = save_json_load(df, run_id, "val_loss_history")
-        val_f1s = save_json_load(df, run_id, "val_f1s")
+        val_f1s = save_json_load(df, run_id, "val_f1_history")
 
     # plotting
     if val:
