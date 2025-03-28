@@ -228,9 +228,7 @@ def train_model(model, X_train, y_train, X_val=None, y_val=None, epochs=16, batc
     
     
 
-
-
-def safe_json_load(df, run_id, column_name):
+def save_json_load(df, run_id, column_name):
     """
     Helper function to safely load JSON data from a DataFrame.
     """
@@ -240,7 +238,7 @@ def safe_json_load(df, run_id, column_name):
         print(f"Error loading {column_name}:", e)
         return None
 
-def plot_training_history(df, run_id, save_path=None, figsize=(10, 5)):
+def plot_training_history(df, run_id, save_path=None, figsize=(10, 5), val=False):
     """
     Plot the training history.
     
@@ -252,12 +250,13 @@ def plot_training_history(df, run_id, save_path=None, figsize=(10, 5)):
     """   
     # data prep
 
-    loss_history = safe_json_load(df, run_id, "loss_history")
-    val_loss_history = safe_json_load(df, run_id, "val_loss_history")
-    val_f1s = safe_json_load(df, run_id, "val_f1s")
+    loss_history = save_json_load(df, run_id, "loss_history")
+    if val:
+        val_loss_history = save_json_load(df, run_id, "val_loss_history")
+        val_f1s = save_json_load(df, run_id, "val_f1s")
 
     # plotting
-    if loss_history is not None and val_loss_history is not None:
+    if val:
         plt.figure(figsize=figsize)
         plt.plot(loss_history, label="Training Loss")
         plt.plot(val_loss_history, label="Validation Loss")
@@ -269,8 +268,19 @@ def plot_training_history(df, run_id, save_path=None, figsize=(10, 5)):
             loss_save_path = save_path + f"losses_ID{run_id}.png"
             plt.savefig(loss_save_path)
         plt.show()
+    else:
+        plt.figure(figsize=figsize)
+        plt.plot(loss_history, label="Training Loss")
+        plt.xlabel("Epoch")
+        plt.ylabel("Binary Cross Entropy Loss")
+        plt.legend()
+        plt.title("Training History")
+        if save_path is not None: # only save if save_path is provided
+            loss_save_path = save_path + f"losses_ID{run_id}.png"
+            plt.savefig(loss_save_path)
+        plt.show()
     
-    if val_f1s is not None:
+    if val:
         plt.figure(figsize=figsize)
         plt.plot(val_f1s, label="Validation F1 Score", color="green")
         plt.xlabel("Epoch")
